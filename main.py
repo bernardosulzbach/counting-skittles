@@ -58,20 +58,27 @@ def ensure_path_exists(path):
     os.makedirs(path)
 
 
+class Instance:
+    def __init__(self, id: str, counts: dict):
+        self.id = id
+        self.counts = counts
+
+
 def main():
     with open('data/labels.json') as data_handle:
-        labels = json.load(data_handle)
+        labels = json.load(data_handle)['labels']
     date_and_time = datetime.datetime.now().isoformat('-')
     output_path = os.path.join('output', date_and_time)
     ensure_path_exists(output_path)
-    for label in labels['labels']:
+    instances = []
+    for label in labels:
+        instances.append(Instance(label, labels[label]))
         filename = label + '.jpg'
         image = cv2.imread(os.path.join('data/images', filename))
         image = cv2.resize(image, (image.shape[1] // 4, image.shape[0] // 4))
         circles = find_circles(image)
         print('Found {} circles in {}.'.format(len(circles), filename))
         cv2.imwrite(os.path.join(output_path, filename), image)
-        break
 
 
 if __name__ == '__main__':
