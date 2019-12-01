@@ -49,11 +49,11 @@ constexpr int EdgeThreshold = 100;
 
 static const char *const Extension = ".jpg";
 
-constexpr std::array<Color, 5> ReferenceColors = {{{0.101f, 0.134f, 0.378f},
-                                                   {0.061f, 0.265f, 0.662f},
-                                                   {0.037f, 0.484f, 0.663f},
-                                                   {0.082f, 0.336f, 0.171f},
-                                                   {0.101f, 0.107f, 0.152f}}};
+constexpr std::array<Color, 5> ReferenceColors = {{{0.094f, 0.107f, 0.299f},
+                                                   {0.076f, 0.226f, 0.576f},
+                                                   {0.048f, 0.419f, 0.579f},
+                                                   {0.082f, 0.308f, 0.152f},
+                                                   {0.091f, 0.088f, 0.113f}}};
 
 constexpr std::array<std::string_view, 5> ReferenceColorNames = {{"Red", "Orange", "Yellow", "Green", "Purple"}};
 
