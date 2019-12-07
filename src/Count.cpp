@@ -57,16 +57,13 @@ constexpr std::array<Color, 5> ReferenceColors = {{{0.094f, 0.107f, 0.299f},
 
 constexpr std::array<std::string_view, 5> ReferenceColorNames = {{"Red", "Orange", "Yellow", "Green", "Purple"}};
 
-int getReferenceColorIndex(Color color) {
-  cv::Mat3f sourceColorAsLab;
-  cv::cvtColor(cv::Mat3f(cv::Vec3f(color[0], color[1], color[2])), sourceColorAsLab, cv::COLOR_BGR2Lab);
+int getReferenceColorIndex(const Color color) {
   int bestMatch = -1;
-  float bestMatchDistance = std::numeric_limits<float>::infinity();
+  auto bestMatchDistance = std::numeric_limits<float>::infinity();
+  const auto sourceColor = cv::Vec3f(color[0], color[1], color[2]);
   for (int i = 0; i < static_cast<int>(ReferenceColors.size()); i++) {
-    cv::Mat3f referenceColorAsLab;
     const auto referenceColor = cv::Vec3f(ReferenceColors[i][0], ReferenceColors[i][1], ReferenceColors[i][2]);
-    cv::cvtColor(cv::Mat3f(referenceColor), referenceColorAsLab, cv::COLOR_BGR2Lab);
-    const auto thisDistance = cv::norm(referenceColorAsLab.at<cv::Vec3f>(0) - sourceColorAsLab.at<cv::Vec3f>(0));
+    const auto thisDistance = cv::norm(referenceColor - sourceColor);
     if (thisDistance < bestMatchDistance) {
       bestMatch = i;
       bestMatchDistance = thisDistance;
